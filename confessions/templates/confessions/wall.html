@@ -1,0 +1,67 @@
+{% extends 'confessions/base.html' %} {% block content %}
+<div class="row g-4">
+  <!-- Left Column: Confession Feed -->
+  <div class="col-12 col-lg-8">
+    <h3 class="mb-4 fw-bold">Recent Confessions</h3>
+
+    {% if confessions %} {% for confession in confessions %}
+    <div class="card shadow-sm border-0 mb-3">
+      <div class="card-body">
+        <p class="card-text fs-5 text-dark">"{{ confession.content }}"</p>
+        <div
+          class="d-flex justify-content-between align-items-center text-muted small border-top pt-2 mt-2"
+        >
+          <span
+            >@{{ confession.author.username }} &bull; {{
+            confession.created_at|timesince }} ago</span
+          >
+
+          <!-- Upvote Form -->
+          <form action="{% url 'upvote' confession.pk %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-outline-danger">
+              ❤️ {{ confession.upvotes }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <div class="alert alert-secondary text-center py-4">
+      No confessions yet. Be the first to share a whisper!
+    </div>
+    % endif %}
+  </div>
+
+  <!-- Right Column: Submission Form -->
+  <div class="col-12 col-lg-4">
+    <div class="card shadow-sm border-0 sticky-top" style="top: 2rem">
+      <div class="card-body">
+        <h4 class="card-title fw-bold mb-3">Submit a Whisper</h4>
+
+        {% if user.is_authenticated %}
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">{{ form.content }}</div>
+          <button type="submit" class="btn btn-dark w-100 py-2">
+            Post Anonymously
+          </button>
+        </form>
+        {% else %}
+        <div class="text-center py-3">
+          <p class="text-muted small">
+            You must be logged in to post a confession and protect against spam.
+          </p>
+          <a href="{% url 'login' %}" class="btn btn-primary w-100 mb-2"
+            >Login</a
+          >
+          <a href="{% url 'signup' %}" class="btn btn-outline-secondary w-100"
+            >Sign Up</a
+          >
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
