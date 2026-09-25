@@ -1,66 +1,87 @@
 {% extends 'confessions/base.html' %} {% block content %}
-<div class="row g-4">
-  <!-- Left Column: Confession Feed -->
-  <div class="col-12 col-lg-8">
-    <h3 class="mb-4 fw-bold">Recent Confessions</h3>
-
-    {% if confessions %} {% for confession in confessions %}
-    <div class="card shadow-sm border-0 mb-3">
-      <div class="card-body">
-        <p class="card-text fs-5 text-dark">"{{ confession.content }}"</p>
-        <div
-          class="d-flex justify-content-between align-items-center text-muted small border-top pt-2 mt-2"
-        >
-          <span
-            >@{{ confession.author.username }} &bull; {{
-            confession.created_at|timesince }} ago</span
-          >
-
-          <!-- Upvote Form -->
-          <form action="{% url 'upvote' confession.pk %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-sm btn-outline-danger">
-              ❤️ {{ confession.upvotes }}
-            </button>
-          </form>
-        </div>
-      </div>
+<div class="row justify-content-center">
+  <div class="col-md-8 col-lg-6">
+    <!-- Page Header / Hero Element -->
+    <div class="text-center my-4">
+      <h1 class="fw-bold display-6 text-dark">Whisper Wall</h1>
+      <p class="text-muted">
+        Share your anonymous thoughts safely with the world.
+      </p>
     </div>
-    {% endfor %} {% else %}
-    <div class="alert alert-secondary text-center py-4">
-      No confessions yet. Be the first to share a whisper!
-    </div>
-    % endif %}
-  </div>
 
-  <!-- Right Column: Submission Form -->
-  <div class="col-12 col-lg-4">
-    <div class="card shadow-sm border-0 sticky-top" style="top: 2rem">
-      <div class="card-body">
-        <h4 class="card-title fw-bold mb-3">Submit a Whisper</h4>
-
-        {% if user.is_authenticated %}
-        <form method="POST">
+    <!-- Submission Box (If user is logged in) -->
+    {% if user.is_authenticated %}
+    <div class="card border-0 shadow-sm rounded-4 mb-4 bg-light">
+      <div class="card-body p-4">
+        <form method="POST" action="">
           {% csrf_token %}
-          <div class="mb-3">{{ form.content }}</div>
-          <button type="submit" class="btn btn-dark w-100 py-2">
-            Post Anonymously
-          </button>
+          <div class="mb-3">
+            <textarea
+              name="content"
+              rows="3"
+              class="form-control border-0 shadow-sm rounded-3 p-3"
+              placeholder="What's on your mind? Keep it anonymous..."
+              required
+            ></textarea>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button
+              type="submit"
+              class="btn btn-dark px-4 rounded-pill fw-semibold shadow-sm"
+            >
+              Share Whisper ✨
+            </button>
+          </div>
         </form>
-        {% else %}
-        <div class="text-center py-3">
-          <p class="text-muted small">
-            You must be logged in to post a confession and protect against spam.
-          </p>
-          <a href="{% url 'login' %}" class="btn btn-primary w-100 mb-2"
-            >Login</a
-          >
-          <a href="{% url 'signup' %}" class="btn btn-outline-secondary w-100"
-            >Sign Up</a
-          >
-        </div>
-        {% endif %}
       </div>
+    </div>
+    {% endif %}
+
+    <!-- Confessions Feed -->
+    <div class="confessions-list">
+      {% if confessions %} {% for confession in confessions %}
+      <div class="card border-0 shadow-sm rounded-4 mb-3 transition-hover">
+        <div class="card-body p-4">
+          <p
+            class="card-text fs-5 text-dark mb-3"
+            style="white-space: pre-line"
+          >
+            “{{ confession.content }}”
+          </p>
+
+          <div
+            class="d-flex justify-content-between align-items-center text-muted small pt-2 border-top"
+          >
+            <span class="fw-medium text-secondary">
+              <i class="bi bi-person-circle me-1"></i>@{{
+              confession.author.username }} &bull; {{
+              confession.created_at|timesince }} ago
+            </span>
+
+            <!-- Upvote Form -->
+            <form
+              action="{% url 'upvote' confession.pk %}"
+              method="POST"
+              class="m-0"
+            >
+              {% csrf_token %}
+              <button
+                type="submit"
+                class="btn btn-sm btn-light border rounded-pill px-3 text-danger fw-semibold d-flex align-items-center gap-1 shadow-sm"
+              >
+                ❤️ <span>{{ confession.upvotes }}</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <div class="text-center py-5 text-muted">
+        <div class="display-4 mb-2">🍃</div>
+        <p class="fs-5">No confessions yet.</p>
+        <p class="small">Be the first one to break the silence!</p>
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>
