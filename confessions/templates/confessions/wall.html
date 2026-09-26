@@ -1,0 +1,99 @@
+{% extends 'confessions/base.html' %} {% block content %}
+<div
+  class="whisper-page{% if user.is_authenticated %} whisper-page--composer{% endif %}"
+>
+  <header class="wall-heading">
+    <p class="wall-kicker">A little honesty goes a long way</p>
+    <h1>Whisper Wall</h1>
+    <p class="wall-intro">
+      Small thoughts, secrets, and stories. Shared anonymously.
+    </p>
+  </header>
+
+  <div class="feed-heading">
+    <h2>Latest whispers</h2>
+    <span>{{ confessions|length }} shared</span>
+  </div>
+
+  <section class="confessions-grid" aria-label="Latest confessions">
+    {% for confession in confessions %}
+    <article
+      class="confession-card {% cycle 'tone-lime' 'tone-yellow' 'tone-blue' 'tone-pink' 'tone-lavender' 'tone-mint' 'tone-coral' %}"
+    >
+      {% if confession.content|length > 180 %}
+      <details class="confession-expand">
+        <summary>
+          <span class="confession-preview"
+            >{{ confession.content|truncatewords:28 }}</span
+          >
+          <span class="confession-toggle confession-toggle--more"
+            >Read full whisper</span
+          >
+          <span class="confession-toggle confession-toggle--less"
+            >Show less</span
+          >
+        </summary>
+        <p class="confession-full">{{ confession.content }}</p>
+      </details>
+      {% else %}
+      <p class="confession-content">{{ confession.content }}</p>
+      {% endif %}
+      <footer class="confession-meta">
+        <form action="{% url 'upvote' confession.pk %}" method="POST">
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="upvote-button"
+            aria-label="Upvote confession"
+          >
+            <span aria-hidden="true">♥</span>
+            <span>{{ confession.upvotes }}</span>
+          </button>
+        </form>
+        <span class="confession-author"
+          >@{{ confession.author.username|default:'anonymous' }}</span
+        >
+        <time datetime="{{ confession.created_at|date:'c' }}"
+          >{{ confession.created_at|date:"M j, Y, g:i A" }}</time
+        >
+      </footer>
+    </article>
+    {% empty %}
+    <div class="empty-state">
+      <span aria-hidden="true">✳</span>
+      <h2>The wall is quiet</h2>
+      <p>Be the first to leave a whisper.</p>
+    </div>
+    {% endfor %}
+  </section>
+
+  {% if user.is_authenticated %}
+  <section class="submit-panel" id="submit-whisper">
+    <div>
+      <p class="wall-kicker">Your turn</p>
+      <h2>Submit your whisper</h2>
+    </div>
+    <form method="POST" action="">
+      {% csrf_token %}
+      <label class="visually-hidden" for="confession-content"
+        >Your confession</label
+      >
+      <textarea
+        id="confession-content"
+        name="content"
+        rows="3"
+        maxlength="500"
+        placeholder="Type your confession here... (keep it kind)"
+        required
+      ></textarea>
+      <div class="submit-actions">
+        <span>Up to 500 characters</span>
+        <button type="submit" class="submit-button">
+          Post anonymously <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+    </form>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}
