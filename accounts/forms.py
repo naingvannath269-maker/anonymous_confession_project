@@ -21,6 +21,20 @@ class CustomUserCreationForm(UserCreationForm):
     for field_name, field in self.fields.items():
       field.widget.attrs['class'] = 'form-control'
 
+  def save(self, commit=True):
+    user = super().save(commit=False)
+    if not user.username:
+      base_username = user.email.split('@', 1)[0][:130] or 'user'
+      username = base_username
+      suffix = 1
+      while CustomUser.objects.filter(username=username).exists():
+        username = f'{base_username}_{suffix}'
+        suffix += 1
+      user.username = username
+    if commit:
+      user.save()
+    return user
+
 
 class CustomAuthenticationForm(AuthenticationForm):
   username = forms.EmailField(
