@@ -1,0 +1,64 @@
+{% extends 'confessions/base.html' %} {% block content %}
+<div class="row justify-content-center align-items-center min-vh-75 py-5">
+  <div class="col-md-5 col-lg-4">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+      <div class="card-body p-4 p-md-5">
+        <!-- Heading -->
+        <div class="text-center mb-4">
+          <h2 class="fw-bold text-dark">Welcome Back</h2>
+          <p class="text-muted small">
+            Log in to share or read whispers anonymously
+          </p>
+        </div>
+
+        <!-- Error handling display if any -->
+        {% if form.errors %}
+        <div class="alert alert-danger py-2 small rounded-3">
+          Your username and password didn't match. Please try again.
+        </div>
+        {% endif %}
+
+        <!-- Form -->
+        <form method="POST">
+          {% csrf_token %}
+
+          <!-- Render form fields nicely -->
+          {% for field in form %}
+          <div class="mb-3">
+            <label class="form-label text-secondary fw-semibold small"
+              >{{ field.label }}</label
+            >
+            <!-- Adding Bootstrap form-control class dynamically via template or inline styling -->
+            <div class="input-group">{{ field }}</div>
+            {% if field.errors %}
+            <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
+            {% endif %}
+          </div>
+          {% endfor %}
+
+          <div class="d-grid mt-4">
+            <button
+              type="submit"
+              class="btn btn-dark py-2 rounded-pill fw-semibold shadow-sm"
+            >
+              Sign In
+            </button>
+          </div>
+        </form>
+
+        <!-- Footer link to signup -->
+        <div class="text-center mt-4 pt-3 border-top">
+          <p class="text-muted small mb-0">
+            Don't have an account?
+            <a
+              href="{% url 'signup' %}"
+              class="text-decoration-none fw-semibold text-dark"
+              >Create one</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
