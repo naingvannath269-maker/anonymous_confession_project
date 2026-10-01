@@ -20,6 +20,9 @@
     <article
       class="confession-card {% cycle 'tone-lime' 'tone-yellow' 'tone-blue' 'tone-pink' 'tone-lavender' 'tone-mint' 'tone-coral' %}"
     >
+      <span class="confession-author"
+        >@{{ confession.author.username|default:'anonymous' }}</span
+      >
       {% if confession.content|length > 180 %}
       <details class="confession-expand">
         <summary>
@@ -50,11 +53,8 @@
             <span>{{ confession.upvotes }}</span>
           </button>
         </form>
-        <span class="confession-author"
-          >@{{ confession.author.username|default:'anonymous' }}</span
-        >
         <time datetime="{{ confession.created_at|date:'c' }}"
-          >{{ confession.created_at|date:"M j, Y, g:i A" }}</time
+          >{{ confession.created_at|date:"d-M-Y H:i" }}</time
         >
       </footer>
     </article>
