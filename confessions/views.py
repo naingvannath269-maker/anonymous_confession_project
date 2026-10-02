@@ -1,5 +1,6 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from accounts.forms import CustomUserCreationForm
 from .forms import ConfessionForm
@@ -44,4 +45,6 @@ def upvote_confession(request, pk):
   confession = get_object_or_404(Confession, pk=pk)
   confession.upvotes += 1
   confession.save()
+  if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+    return JsonResponse({'upvotes': confession.upvotes})
   return redirect('wall')

@@ -134,22 +134,25 @@ body.whisper-body {
   font-size: 0.78rem;
 }
 
-.confessions-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+.confessions-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .confession-bubble {
   display: flex;
-  max-width: 70%;
+  width: 100%;
+  max-width: 100%;
   flex-direction: column;
   gap: 12px;
   padding: 16px 18px;
   border: 1px solid rgba(39, 65, 83, 0.07);
   border-radius: 18px;
   box-shadow: 0 5px 14px rgba(55, 83, 100, 0.07);
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .confession-bubble:hover {
@@ -187,6 +190,18 @@ body.whisper-body {
 }
 .tone-coral {
   background: #f7d2c5;
+}
+.tone-sky {
+  background: #d6eaff;
+}
+.tone-peach {
+  background: #ffe2c6;
+}
+.tone-seafoam {
+  background: #c8eee5;
+}
+.tone-rose {
+  background: #f7d9e8;
 }
 
 .confession-content {
@@ -422,12 +437,12 @@ body.whisper-body {
   }
 
   .confession-bubble {
-  max-width: 92%;
-}
+    max-width: 100%;
+  }
 
-.bubble-header {
-  flex-wrap: wrap;
-}
+  .bubble-header {
+    flex-wrap: wrap;
+  }
 
   /* .confessions-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -450,7 +465,6 @@ body.whisper-body {
   }
 
   .submit-panel {
-    
     padding: 14px;
   }
 

@@ -1,5 +1,4 @@
-{% extends 'confessions/base.html' %} {% block content %}
-{% load static %}
+{% extends 'confessions/base.html' %} {% block content %} {% load static %}
 <div
   class="whisper-page{% if user.is_authenticated %} whisper-page--composer{% endif %}"
 >
@@ -19,15 +18,13 @@
   <section class="confessions-feed" aria-label="Latest confessions">
     {% for confession in confessions %}
     <article
-      class="confession-bubble {% cycle 'side-right' 'side-left' %} {% cycle 'tone-lime' 'tone-yellow' 'tone-blue' 'tone-pink' 'tone-lavender' 'tone-mint' 'tone-coral' %}"
+      class="confession-bubble {% cycle 'side-right' 'side-left' %} {% cycle 'tone-lime' 'tone-yellow' 'tone-blue' 'tone-pink' 'tone-lavender' 'tone-mint' 'tone-coral' 'tone-sky' 'tone-peach' 'tone-seafoam' 'tone-rose' %}"
     >
       <span class="confession-author"
         >@{{ confession.author.username|default:'anonymous' }}</span
       >
       {% if confession.content|length > 180 %}
-      <div class="bubble-body">
-        ... existing content here ...
-      </div>
+      <div class="bubble-body">... existing content here ...</div>
       <details class="confession-expand">
         <summary>
           <span class="confession-preview"
@@ -46,16 +43,25 @@
       <p class="confession-content">{{ confession.content }}</p>
       {% endif %}
       <header class="bubble-header">
-        <span class="confession-author">@{{ confession.author.username|default:'anonymous' }}</span>
-        <time datetime="{{ confession.created_at|date:'c' }}">{{ confession.created_at|date:"M j, Y, g:i A" }}</time>
+        <span class="confession-author"
+          >@{{ confession.author.username|default:'anonymous' }}</span
+        >
+        <time datetime="{{ confession.created_at|date:'c' }}"
+          >{{ confession.created_at|date:"M j, Y, g:i A" }}</time
+        >
       </header>
       <footer class="bubble-actions">
         <form action="{% url 'upvote' confession.pk %}" method="POST">
           {% csrf_token %}
-          <button type="submit" class="upvote-button" aria-label="Upvote confession">
+          <button
+            type="submit"
+            class="upvote-button"
+            aria-label="Upvote confession"
+          >
             <span aria-hidden="true">♥</span>
             <span>{{ confession.upvotes }}</span>
           </button>
+          <span class="vote-status visually-hidden" role="status"></span>
         </form>
         <button type="button" class="comment-button">Comment and Reply</button>
       </footer>
@@ -68,26 +74,37 @@
     </div>
     {% endfor %}
   </section>
+  <script src="{% static 'confessions/JS/wall.js' %}" defer></script>
 
   {% if user.is_authenticated %}
   <section class="submit-panel" id="submit-whisper">
-    
     <!-- NEW: The Facebook-style collapsed view -->
     <div id="simple-trigger" class="simple-composer">
       <div class="avatar-placeholder"></div>
-      <div class="fake-input">What's on your mind, {{ user.username|default:'Sopheareat' }}?</div>
+      <div class="fake-input">
+        What's on your mind, {{ user.username|default:'Sopheareat' }}?
+      </div>
     </div>
 
     <!-- NEW: Wrapper for your original content (starts hidden) -->
-    <div id="expanded-composer" style="display: none;">
+    <div id="expanded-composer" style="display: none">
       <div>
         <p class="wall-kicker">Your turn</p>
         <h2>Submit your whisper</h2>
       </div>
       <form method="POST" action="">
         {% csrf_token %}
-        <label class="visually-hidden" for="confession-content">Your confession</label>
-        <textarea id="confession-content" name="content" rows="3" maxlength="500" placeholder="Type your confession here... (keep it kind)" required></textarea>
+        <label class="visually-hidden" for="confession-content"
+          >Your confession</label
+        >
+        <textarea
+          id="confession-content"
+          name="content"
+          rows="3"
+          maxlength="500"
+          placeholder="Type your confession here... (keep it kind)"
+          required
+        ></textarea>
         <div class="submit-actions">
           <span>Up to 500 characters</span>
           <button type="submit" class="submit-button">
@@ -96,9 +113,8 @@
         </div>
       </form>
     </div>
-
-</section>
-<script src="{% static 'confessions/JSfile/composer.js' %}" defer></script>
+  </section>
+  <script src="{% static 'confessions/JS/composer.js' %}" defer></script>
   {% endif %}
 </div>
 {% endblock %}
