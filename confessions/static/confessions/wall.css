@@ -253,6 +253,7 @@ body.whisper-body {
   min-width: 0;
   align-items: center;
   gap: 8px;
+  margin-top: auto;
   color: #5c6e79;
   font-size: 0.67rem;
 }
@@ -283,6 +284,9 @@ body.whisper-body {
 }
 
 .confession-author {
+  color: #526c79;
+  font-size: 0.67rem;
+  font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -290,6 +294,9 @@ body.whisper-body {
 
 .confession-meta time {
   margin-left: auto;
+  color: #748792;
+  font-size: 0.62rem;
+  font-weight: 500;
   text-align: right;
   white-space: nowrap;
 }

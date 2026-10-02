@@ -21,6 +21,9 @@
     <article
       class="confession-bubble {% cycle 'side-right' 'side-left' %} {% cycle 'tone-lime' 'tone-yellow' 'tone-blue' 'tone-pink' 'tone-lavender' 'tone-mint' 'tone-coral' %}"
     >
+      <span class="confession-author"
+        >@{{ confession.author.username|default:'anonymous' }}</span
+      >
       {% if confession.content|length > 180 %}
       <div class="bubble-body">
         ... existing content here ...
