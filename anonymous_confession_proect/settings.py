@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'confessiondb',
         'USER': 'postgres',
-        'PASSWORD': 'your_local_pss',
+        'PASSWORD': 'admin0905',
         'HOST': 'localhost',
         'PORT': '5432',
     }
