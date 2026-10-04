@@ -1,4 +1,6 @@
-{% extends 'confessions/base.html' %} {% block content %}
+{% extends 'confessions/base.html' %} {% load static %} {% block page_css %}
+<link rel="stylesheet" href="{% static 'accounts/auth.css' %}" />
+{% endblock %} {% block content %}
 <section class="auth-layout auth-layout--login" aria-labelledby="login-title">
   <aside class="auth-story">
     <span class="auth-eyebrow">A QUIETER CORNER OF THE INTERNET</span>
