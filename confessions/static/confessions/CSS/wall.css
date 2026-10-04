@@ -316,27 +316,6 @@ body.whisper-body {
   margin: 0;
 }
 
-.upvote-button {
-  display: inline-flex;
-  min-width: 44px;
-  height: 26px;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  padding: 0 7px;
-  border: 1px solid rgba(50, 68, 83, 0.1);
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.78);
-  color: #344652;
-  font: inherit;
-  cursor: pointer;
-}
-
-.upvote-button span:first-child {
-  color: #ed6873;
-  font-size: 0.77rem;
-}
-
 .confession-author {
   color: #526c79;
   font-size: 0.67rem;

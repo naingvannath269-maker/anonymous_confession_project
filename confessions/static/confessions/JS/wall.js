@@ -10,14 +10,21 @@ document.addEventListener("submit", async (event) => {
 
   event.preventDefault();
 
-  const button = form.querySelector(".upvote-button");
-  const count = button.querySelector("span:last-child");
-  button.disabled = true;
+  const buttons = [...form.querySelectorAll(".reaction-button")];
+  const submitter = event.submitter;
+  const reaction = submitter?.value;
+  const formData = new FormData(form);
+  if (reaction) {
+    formData.set("reaction", reaction);
+  }
+  buttons.forEach((button) => {
+    button.disabled = true;
+  });
 
   try {
     const response = await fetch(form.action, {
       method: "POST",
-      body: new FormData(form),
+      body: formData,
       headers: {
         "X-Requested-With": "XMLHttpRequest",
         Accept: "application/json",
@@ -35,13 +42,20 @@ document.addEventListener("submit", async (event) => {
     }
 
     const result = await response.json();
-    count.textContent = result.upvotes;
+    form.querySelector(".like-count").textContent = result.like_count;
+    form.querySelector(".unlike-count").textContent = result.unlike_count;
+    form.querySelector(".like-button").classList.toggle("selected", result.liked);
+    form.querySelector(".unlike-button").classList.toggle("selected", result.unliked);
+    form.querySelector(".like-button").setAttribute("aria-pressed", String(result.liked));
+    form.querySelector(".unlike-button").setAttribute("aria-pressed", String(result.unliked));
   } catch {
-    const status = form.querySelector(".vote-status");
+    const status = form.querySelector(".like-status");
     if (status) {
       status.textContent = "Could not record your vote. Please try again.";
     }
   } finally {
-    button.disabled = false;
+    buttons.forEach((button) => {
+      button.disabled = false;
+    });
   }
 });
