@@ -39,11 +39,35 @@ body.whisper-body {
   max-width: 1080px;
 }
 
+.theme-toggle {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: rgba(83, 114, 137, 0.1);
+}
+
+.theme-toggle-icon {
+  font-size: 1rem;
+}
+
 .whisper-brand {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  color: var(--ink) !important;
+  color: #880085 !important;
   font-family: "Manrope", sans-serif;
   font-size: 1rem;
 }
@@ -67,6 +91,20 @@ body.whisper-body {
 .whisper-signup {
   background: var(--blue);
   border-color: var(--blue);
+}
+
+.whisper-nav .nav-link,
+.whisper-nav .text-warning {
+  color: #880085 !important;
+}
+
+.whisper-nav .theme-toggle {
+  border-color: var(--line);
+  color: #880085 !important;
+}
+
+.whisper-nav .btn {
+  color: #880085 !important;
 }
 
 .whisper-main {
@@ -107,6 +145,7 @@ body.whisper-body {
 
 .wall-heading h1 {
   font-size: clamp(1.8rem, 5vw, 2.35rem);
+  color: #880085;
 }
 
 .wall-intro {
@@ -171,37 +210,37 @@ body.whisper-body {
 }
 
 .tone-lime {
-  background: #d9f2c8;
+  background: #c8d9ba;
 }
 .tone-yellow {
-  background: #fff0b8;
+  background: #e0d2a7;
 }
 .tone-blue {
-  background: #cce8fa;
+  background: #b9cedc;
 }
 .tone-pink {
-  background: #f6d3dc;
+  background: #dfbec7;
 }
 .tone-lavender {
-  background: #e6dcfa;
+  background: #cbbfe0;
 }
 .tone-mint {
-  background: #c9eddf;
+  background: #b8d2c5;
 }
 .tone-coral {
-  background: #f7d2c5;
+  background: #dfbeb1;
 }
 .tone-sky {
-  background: #d6eaff;
+  background: #b9cede;
 }
 .tone-peach {
-  background: #ffe2c6;
+  background: #e0c5a9;
 }
 .tone-seafoam {
-  background: #c8eee5;
+  background: #b4d2c8;
 }
 .tone-rose {
-  background: #f7d9e8;
+  background: #ddbdce;
 }
 
 .confession-content {
@@ -919,4 +958,139 @@ body.whisper-body {
 
 .comment-button:hover {
   background: #ffffff;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #edf1f4;
+  --muted-ink: #a7b1bb;
+  --line: #39434d;
+}
+
+html[data-theme="dark"] body.whisper-body {
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 8% 8%, rgba(60, 72, 76, 0.28), transparent 26rem),
+    radial-gradient(ellipse at 94% 24%, rgba(44, 62, 68, 0.34), transparent 30rem),
+    #15191d !important;
+}
+
+html[data-theme="dark"] .whisper-nav {
+  background: rgba(25, 30, 35, 0.96);
+  border-bottom-color: #343d46;
+}
+
+html[data-theme="dark"] .whisper-brand,
+html[data-theme="dark"] .theme-toggle,
+html[data-theme="dark"] .wall-heading h1,
+html[data-theme="dark"] .submit-panel h2,
+html[data-theme="dark"] .feed-heading h2,
+html[data-theme="dark"] .empty-state h2 {
+  color: var(--ink) !important;
+}
+
+html[data-theme="dark"] .whisper-brand,
+html[data-theme="dark"] .wall-heading h1 {
+  color: #ffef00 !important;
+}
+
+html[data-theme="dark"] .whisper-nav .theme-toggle {
+  border-color: var(--line);
+  color: #ffef00 !important;
+}
+
+html[data-theme="dark"] .whisper-nav .nav-link,
+html[data-theme="dark"] .whisper-nav .text-warning,
+html[data-theme="dark"] .whisper-nav .btn {
+  color: #ffef00 !important;
+}
+
+html[data-theme="dark"] .whisper-brand-mark {
+  background: #293c43;
+  color: #a6dce7;
+}
+
+html[data-theme="dark"] .navbar-toggler {
+  border-color: #56616b;
+}
+
+html[data-theme="dark"] .navbar-toggler-icon {
+  filter: invert(1);
+}
+
+html[data-theme="dark"] .empty-state {
+  border-color: #4b5964;
+  background: rgba(36, 43, 49, 0.75);
+}
+
+html[data-theme="dark"] .submit-panel,
+html[data-theme="dark"] .auth-panel {
+  background: rgba(31, 37, 43, 0.98);
+  border-color: #39434d;
+}
+
+html[data-theme="dark"] .submit-panel textarea,
+html[data-theme="dark"] .auth-field .form-control,
+html[data-theme="dark"] .auth-layout--login .auth-field .form-control {
+  border-color: #46515b;
+  background: #191e23;
+  color: #edf1f4;
+}
+
+html[data-theme="dark"] .submit-panel textarea::placeholder,
+html[data-theme="dark"] .fake-input {
+  color: #a7b1bb;
+}
+
+html[data-theme="dark"] .avatar-placeholder {
+  background: #434c55;
+}
+
+html[data-theme="dark"] .fake-input,
+html[data-theme="dark"] .simple-composer:hover .fake-input {
+  background: #303840;
+}
+
+html[data-theme="dark"] .auth-field label,
+html[data-theme="dark"] .auth-heading h2 {
+  color: #edf1f4;
+}
+
+html[data-theme="dark"] .auth-switch {
+  border-top-color: #39434d;
+}
+
+html[data-theme="dark"] .auth-error {
+  color: #ffaaa2;
+}
+
+html[data-theme="dark"] .auth-form > .auth-error {
+  border-color: #704b49;
+  background: #3b2928;
+}
+
+html[data-theme="dark"] .auth-story {
+  border-color: #3c554e;
+  background:
+    repeating-linear-gradient(135deg, transparent 0, transparent 21px, rgba(164, 205, 183, 0.035) 22px, rgba(164, 205, 183, 0.035) 23px),
+    #263833;
+}
+
+html[data-theme="dark"] .auth-story h1 {
+  color: #e1eee8;
+}
+
+html[data-theme="dark"] .auth-story > p,
+html[data-theme="dark"] .auth-eyebrow,
+html[data-theme="dark"] .auth-story-foot {
+  color: #b3c9bf;
+}
+
+html[data-theme="dark"] .auth-note {
+  border-color: #4a5145;
+  background: #34372f;
+}
+
+html[data-theme="dark"] .auth-note-message {
+  color: #e8e9dc;
 }
